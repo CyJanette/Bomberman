@@ -1,0 +1,25 @@
+@startuml
+
+class Game
+class Board 
+class Cell
+class Player 
+class Bomb 
+class PowerUp 
+class Timer 
+class Position 
+enum Direction 
+
+
+
+Game "1" -- "1" Board
+Game "1" -- "2..*" Player
+Game "1" -- "1" Timer
+Board "1" -- "0..*" Cell
+Player "0..*" -- "0..*" Bomb
+Cell "0..1" -- "0..1" PowerUp
+Player "1" -- "1" Position
+Bomb "1" -- "1" Position
+Bomb "1" -- "1" Player : owner
+
+@enduml
