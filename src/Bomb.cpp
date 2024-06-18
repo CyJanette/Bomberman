@@ -55,11 +55,51 @@ bool Bomb::isExploded() const {
     return countdown <= 0;
 }
 
-// Maneja la explosión de la bomba
 void Bomb::explode() {
     if (isExploded()) {
-        // Lógica de la explosión: afectar celdas y jugadores en el radio de la explosión
-        // Este método se llamaría desde el controlador del juego cuando el contador llegue a cero
+        // Obtener la posición de la bomba
+        int bombX = position->getX();
+        int bombY = position->getY();
+
+        // Afectar la celda de la bomba
+        Cell* centerCell = GameManager::getInstance()->getBoard()->getCell(bombX, bombY);
+        if (centerCell) {
+            centerCell->explode(); // Suponiendo que la celda tiene un método para manejar la explosión
+        }
+
+        // Afectar las celdas en el radio de explosión
+        for (int dx = -blastRadius; dx <= blastRadius; ++dx) {
+            for (int dy = -blastRadius; dy <= blastRadius; ++dy) {
+                // Calcular las coordenadas de la celda afectada
+                int affectedX = bombX + dx;
+                int affectedY = bombY + dy;
+
+                // Verificar si la celda está dentro del tablero
+                if (affectedX >= 0 && affectedX < GameManager::getInstance()->getBoard()->getWidth() &&
+                    affectedY >= 0 && affectedY < GameManager::getInstance()->getBoard()->getHeight()) {
+                    Cell* affectedCell = GameManager::getInstance()->getBoard()->getCell(affectedX, affectedY);
+                    if (affectedCell) {
+                        affectedCell->explode(); // Lógica de explosión de la celda afectada
+                    }
+                }
+            }
+        }
+
+        // Afectar a los jugadores en el radio de explosión
+        for (Player* player : GameManager::getInstance()->getPlayers()) {
+            Position* playerPosition = player->getPosition();
+            int playerX = playerPosition->getX();
+            int playerY = playerPosition->getY();
+
+            // Calcular la distancia entre el jugador y la bomba
+            int distanceX = std::abs(playerX - bombX);
+            int distanceY = std::abs(playerY - bombY);
+
+            // Verificar si el jugador está dentro del radio de explosión
+            if (distanceX <= blastRadius && distanceY <= blastRadius) {
+                player->loseLife(); // Reducir las vidas del jugador (ejemplo)
+            }
+        }
     }
 }
 
