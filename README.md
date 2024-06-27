@@ -7,8 +7,7 @@
 ## Integrantes del equipo 
 
 
-* David Israel Rodriguez Medina 22310261
-* 
+* Cynthia Janette Garcia Amezcua 
 
 ## Historia
 El juego Bomberman fue desarrollado por Hudson Soft para Nintendo Entertainment System. Fue lanzado primero en Japón (Diciembre de 1985) y luego en EE.UU. (Enero de 1989). El juego es de estrategia, y el protagonista emplea de bombas para abrirse camino en los diversos laberintos que atraviesa.
